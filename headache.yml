@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: headache
+  name: headache
+  namespace: web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: headache
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: headache
+    spec:
+      containers:
+      - image: youffes/headache
+        name: headache
+        resources: {}
+status: {}
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: headache
+  name: headache-service
+  namespace: web
+spec:
+  ports:
+  - port: 1337
+    protocol: TCP
+    targetPort: 1337
+    nodePort: 30010
+  selector:
+    app: headache
+  type: NodePort
+status:
+  loadBalancer: {}
+

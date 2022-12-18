@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: misalign
+  name: misalign
+  namespace: pwn
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: misalign
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: misalign
+    spec:
+      containers:
+      - image: youffes/misalign
+        name: misalign
+        resources: {}
+status: {}
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: misalign
+  name: misalign-service
+  namespace: pwn
+spec:
+  ports:
+  - port: 4441
+    protocol: TCP
+    targetPort: 4441
+    nodePort: 30002
+  selector:
+    app: misalign
+  type: NodePort
+status:
+  loadBalancer: {}

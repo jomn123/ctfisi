@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: fripe
+  name: fripe
+  namespace: pwn
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fripe
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: fripe
+    spec:
+      containers:
+      - image: youffes/fripe
+        name: fripe
+        resources: {}
+status: {}
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: fripe
+  name: fripe-service
+  namespace: pwn
+spec:
+  ports:
+  - port: 4444
+    protocol: TCP
+    targetPort: 4444
+    nodePort: 30000
+  selector:
+    app: fripe
+  type: NodePort
+status:
+  loadBalancer: {}
+

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: fsb
+  name: fsb
+  namespace: pwn
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fsb
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: fsb
+    spec:
+      containers:
+      - image: youffes/fsb
+        name: fsb
+        resources: {}
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: fsb
+  name: fsb-service
+  namespace: pwn
+spec:
+  ports:
+  - port: 4443
+    protocol: TCP
+    targetPort: 4443
+    nodePort: 30001
+  selector:
+    app: fsb
+  type: NodePort
+status:
+  loadBalancer: {}

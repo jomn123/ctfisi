@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: monitor
+  name: monitor
+  namespace: web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: monitor
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: monitor
+    spec:
+      containers:
+      - image: youffes/monitor
+        name: monitor
+        resources: {}
+status: {}
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: monitor
+  name: monitor-service
+  namespace: web
+spec:
+  ports:
+  - port: 1339
+    protocol: TCP
+    targetPort: 80
+    nodePort: 30011
+  selector:
+    app: monitor
+  type: NodePort
+status:
+  loadBalancer: {}

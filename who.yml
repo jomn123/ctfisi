@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: who
+  name: who
+  namespace: web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: who
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: who
+    spec:
+      containers:
+      - image: youffes/who
+        name: who
+        resources: {}
+status: {}
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: who
+  name: who-service
+  namespace: web
+spec:
+  ports:
+  - port: 1342
+    protocol: TCP
+    targetPort: 80
+    nodePort: 30012
+  selector:
+    app: who
+  type: NodePort
+status:
+  loadBalancer: {}
+
